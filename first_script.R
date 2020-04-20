@@ -325,10 +325,10 @@ covidny <-
 
 saveWidget(covidny, file="covidny.html")
 
-library(rsconnect)
+#library(rsconnect)
 
-result <- rpubsUpload("Covid-19 Cases and Deaths - New York", "covidny.html", originalDoc = NULL)
+#result <- rpubsUpload("Covid-19 Cases and Deaths - New York", "covidny.html", originalDoc = NULL)
 
-updateResult <- rpubsUpload("COVID-19 Cases and Deaths - New York", "covidny.html", result$id)
+#updateResult <- rpubsUpload("COVID-19 Cases and Deaths - New York", "covidny.html", result$id)
 
-browseURL(updateResult$continueUrl) #Slug - c35
+#browseURL(updateResult$continueUrl) #Slug - c35
