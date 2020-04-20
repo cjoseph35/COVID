@@ -1,0 +1,9 @@
+name: "Connor J. Schweitzer"
+output_dir: "."
+navbar:
+  title: "Connor J. Schweitzer"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
