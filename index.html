@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Connor J Schweitzer" />
 
 
-<title>COVID</title>
+<title>Coronavirus Data Analysis for New York</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -289,24 +290,27 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">COVID</h1>
+<h1 class="title toc-ignore">Coronavirus Data Analysis for New York</h1>
+<h4 class="author">Connor J Schweitzer</h4>
 
 </div>
 
 
-<pre class="r"><code>summary(cars)</code></pre>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="index_files/figure-html/pressure-1.png" width="672" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<div id="downstate-new-york" class="section level2">
+<h2>Downstate New York</h2>
+<p>New York City cases have well outpaced the rest of downstate New York:</p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.gif" /><!-- --></p>
+<p>The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.gif" /><!-- --></p>
+</div>
+<div id="long-island" class="section level2">
+<h2>Long Island</h2>
+<p>Long Island experienced early exponential growth, which was significantly slowed by the NYS on Pause orders.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>The growth have death rates have experienced a similar decline.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>The 3-day moving average illustrates a clear decline in growth of cases, though missing values (from delayed data reporting) were not imputed or smoothed.</p>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 
 

@@ -3,6 +3,12 @@ title: "Coronavirus Data Analysis for New York"
 author: "Connor J Schweitzer"
 ---
 
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
+
+
 ```{r, include = FALSE}
 require(ggplot2)
 require(reshape2)
@@ -23,11 +29,19 @@ library(leaflet)
 library(maps)
 library(htmlwidgets)
 
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+setwd("C:\\Users\\CONNO\\OneDrive\\Documents\\GitHub\\COVID")
 
 dat <- read_excel('USCOVID_TimeSeries.xlsx',sheet = 'covid')
+dat.death <- read_excel('USCOVID_TimeSeries.xlsx',sheet = 'covid_deaths')
 
 ##Removes unnecessary fields
+dat.death$iso2 <- NULL
+dat.death$iso3 <- NULL
+dat.death$code3 <- NULL
+dat.death$FIPS <- NULL
+dat.death$Country_Region <- NULL
+
+
 dat$iso2 <- NULL
 dat$iso3 <- NULL
 dat$code3 <- NULL
@@ -42,13 +56,21 @@ dat.melt$variable <- NULL
 dat.melt$value <- as.numeric(dat.melt$value)
 dat.melt$date <- as.Date(dat.melt$date,"%m/%d/%y") ##Sets date to date type
 
+dat.death.melt <- melt(dat.death, id.vars = c('UID','Admin2','Province_State', 'Lat','Long_','Combined_Key','Population'))
+dat.death.melt$date <- dat.death.melt$variable
+dat.death.melt$variable <- NULL
+dat.death.melt$value <- as.numeric(dat.death.melt$value)
+dat.death.melt$date <- as.Date(dat.death.melt$date,"%m/%d/%y")
+
 
 ## NEW YORK ONLY ##
 dat.melt.NY <- dat.melt[dat.melt$Province_State == 'New York',] 
+dat.death.melt.NY <- dat.death.melt[dat.death.melt$Province_State == 'New York',] ##Removes all other States
 
 ##Long Island Only##
 dat.melt.LI <- dat.melt.NY[dat.melt.NY$Admin2 == 'Suffolk' | dat.melt.NY$Admin2 == 'Nassau',]
 dat.melt.LI <-dat.melt.LI[dat.melt.LI$value > 1,] ##Ignores early months
+dat.death.melt.LI <- dat.death.melt.NY[dat.death.melt.NY$Admin2 == 'Suffolk' | dat.death.melt.NY$Admin2 == 'Nassau',]
 
 ##Downstate Only##
 dat.melt.DS <- dat.melt.NY[dat.melt.NY$Admin2 == 'Suffolk' | dat.melt.NY$Admin2 == 'Nassau'|dat.melt.NY$Admin2 == 'New York'|dat.melt.NY$Admin2 == 'Westchester'|dat.melt.NY$Admin2 == 'Rockland'|dat.melt.NY$Admin2 == 'Orange',]
@@ -116,6 +138,14 @@ RateGrowthDS <- dat.melt.DS %>%
   mutate(Diff_growth = value - lag(value),
          Rate_growth = Diff_growth/lag(value)*100)
 
+RateGrowthDeath.LI <-
+  dat.death.melt.LI %>%
+  group_by(Admin2) %>%
+  mutate(Diff_growth = value - lag(value),
+         Rate_growth = Diff_growth/lag(value)*100)
+
+RateGrowthDeath.LI <- RateGrowthDeath.LI[RateGrowthDeath.LI$value > 0,]
+
 
 ## 3-day moving average of rate growth
 RateGrowthDS <- RateGrowthDS %>%
@@ -135,7 +165,7 @@ LIOnlyRGstatic <-
   scale_x_date(date_breaks = '3 days',
                date_labels = "%m/%d")+
   scale_y_continuous(label = scales::percent,
-                     breaks = seq(from = 0, to = 10000, by = .05),
+                     breaks = seq(from = 0, to = 10000, by = .1),
                      limits = c(0,1),
                      expand = c(0,0))+
   geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick4')+
@@ -150,6 +180,46 @@ LIOnlyRGstatic <-
         legend.title = element_blank(),
         legend.position = 'bottom')
 
+
+##Rate Growth Static -- Death##
+LIonlyRGstaticdeath <-
+  ggplot(RateGrowthDeath.LI, aes(x = date, y = Rate_growth/100, fill = Admin2, color = Admin2))+
+  geom_bar(stat='identity', position = 'dodge')+
+  scale_x_date(date_breaks = '3 days',
+               date_labels = "%m/%d")+
+  facet_wrap(.~Admin2, ncol = 1)+
+  scale_y_continuous(label = scales::percent,
+                     expand = c(0,0))+
+  geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick4')+
+  annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = 1.5,label = 'NYS on Pause',
+           color = 'firebrick4', fontface = c('bold'))+
+  labs(title='Day-by-day Death Growth Rate -- Long Island Only') +
+  ylab('% Increase in Deaths')+
+  xlab('Date')+
+  theme_bw()+
+  theme(plot.title = element_text(hjust = .5),
+        legend.title = element_blank(),
+        legend.position = 'bottom')
+
+## 3-day moving average ##
+LIonlyRG3day <- 
+    ggplot(RateGrowthDS, aes(x = date, y = Rate_growth_3day/100, color = Admin2, fill = Admin2))+
+      geom_point(aes(x = date, y = Rate_growth/100, color = Admin2, fill = Admin2),alpha = .5)+
+      geom_line(size = 1.5)+
+      geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick4')+
+      scale_x_date(date_breaks = '3 days',
+                   date_labels = "%m/%d")+
+      scale_y_continuous(label = scales::percent,
+                         expand = c(0,0))+
+      annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = 1.5,label = 'NYS on Pause',
+               color = 'firebrick4', fontface = c('bold'))+
+      labs(title='3-Day Moving Average Confirmed Cases -- Long Island Only') +
+      ylab('% Increase in Cases - 3 day average')+
+      xlab('Date')+
+      theme_bw()+
+      theme(plot.title = element_text(hjust = .5),
+            legend.title = element_blank(),
+            legend.position = 'bottom')
 ```
 
 ## Downstate New York
@@ -157,23 +227,40 @@ LIOnlyRGstatic <-
 New York City cases have well outpaced the rest of downstate New York:
 
 ```{r, echo=FALSE}
-animate(DSonly, nframes = 100, renderer = gifski_renderer("Downstate.gif"))
+suppressWarnings(animate(DSonly, nframes = 100, renderer = gifski_renderer("Downstate.gif")))
 ```
 
 The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale. 
 
 ```{r, echo=FALSE}
 
-animate(DSonlylog, nframes = 100, renderer = gifski_renderer("DownstateLog.gif"))
+suppressWarnings(animate(DSonlylog, nframes = 100, renderer = gifski_renderer("DownstateLog.gif")))
 
 ```
 
 ## Long Island 
 
-Long Island experienced early exponential growth, which was significantly slowed by the NYS on Pause orders
+Long Island experienced early exponential growth, which was significantly slowed by the NYS on Pause orders. 
 
 ```{r, echo = FALSE}
 
-plot(LIOnlyRGstatic)
+suppressWarnings(plot(LIOnlyRGstatic))
 
 ```
+
+The growth have death rates have experienced a similar decline.
+
+```{r, echo = FALSE}
+
+suppressWarnings(plot(LIonlyRGstaticdeath))
+
+```
+
+The 3-day moving average illustrates a clear decline in growth of cases, though missing values (from delayed data reporting) were not imputed or smoothed. 
+
+```{r, echo = FALSE}
+
+suppressWarnings(plot(LIonlyRG3day))
+
+```
+
