@@ -1,5 +1,7 @@
 ---
 title: "Coronavirus Data Analysis for New York"
+layout: default
+theme: jekyll-theme-midnight
 ---
 
 
