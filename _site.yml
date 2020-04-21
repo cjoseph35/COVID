@@ -7,3 +7,7 @@ navbar:
       href: index.html
     - text: "Map"
       href: Map.html
+output:
+  html_document:
+    theme: jekyll-theme-midnight
+    css: 'styles.css'
