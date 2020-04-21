@@ -3,7 +3,7 @@ output_dir: "."
 navbar:
   title: "Connor J. Schweitzer"
   left:
-    - text: "Home"
+    - text: "Charts"
       href: index.html
-    - text: "About"
-      href: about.html
+    - text: "Map"
+      href: Map.html
