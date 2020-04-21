@@ -1,17 +1,179 @@
 ---
-title: "COVID"
+title: "Coronavirus Data Analysis for New York"
+author: "Connor J Schweitzer"
 ---
 
-```{r cars}
-summary(cars)
+```{r, include = FALSE}
+require(ggplot2)
+require(reshape2)
+require(gganimate)
+require(gifski)
+require(readxl, quietly = TRUE)
+require(xlsx, quietly = TRUE)
+require(dplyr)
+require(cowplot, quietly = TRUE)
+require(googleway, quietly = TRUE)
+require(ggrepel, quietly = TRUE)
+require(ggspatial, quietly = TRUE)
+require(libwgeom, quietly = TRUE)
+require(sf, quietly = TRUE)
+require(rnaturalearth, quietly = TRUE)
+require(rnaturalearthdata, quietly = TRUE)
+library(leaflet)
+library(maps)
+library(htmlwidgets)
+
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+dat <- read_excel('USCOVID_TimeSeries.xlsx',sheet = 'covid')
+
+##Removes unnecessary fields
+dat$iso2 <- NULL
+dat$iso3 <- NULL
+dat$code3 <- NULL
+dat$FIPS <- NULL
+dat$Country_Region <- NULL 
+#############################
+
+##Tidies Data##
+dat.melt <- melt(dat, id.vars = c('UID','Admin2','Province_State', 'Lat','Long_','Combined_Key'))
+dat.melt$date <- dat.melt$variable
+dat.melt$variable <- NULL
+dat.melt$value <- as.numeric(dat.melt$value)
+dat.melt$date <- as.Date(dat.melt$date,"%m/%d/%y") ##Sets date to date type
+
+
+## NEW YORK ONLY ##
+dat.melt.NY <- dat.melt[dat.melt$Province_State == 'New York',] 
+
+##Long Island Only##
+dat.melt.LI <- dat.melt.NY[dat.melt.NY$Admin2 == 'Suffolk' | dat.melt.NY$Admin2 == 'Nassau',]
+dat.melt.LI <-dat.melt.LI[dat.melt.LI$value > 1,] ##Ignores early months
+
+##Downstate Only##
+dat.melt.DS <- dat.melt.NY[dat.melt.NY$Admin2 == 'Suffolk' | dat.melt.NY$Admin2 == 'Nassau'|dat.melt.NY$Admin2 == 'New York'|dat.melt.NY$Admin2 == 'Westchester'|dat.melt.NY$Admin2 == 'Rockland'|dat.melt.NY$Admin2 == 'Orange',]
+
+## DOWNSTATE ALL CASES ##
+DSonly <-
+  ggplot(dat.melt.DS, aes(x = date, y = value, color = Admin2, fill = Admin2))+
+  geom_line(size = 1.5)+
+  geom_point(size = 3)+
+  geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick4')+
+  annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*9/10,label = 'NYS on Pause',
+           color = 'firebrick4', fontface = c('bold'))+
+  geom_vline(data = NULL, xintercept = as.Date("3/1/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick3')+
+  annotate('text', x = as.Date("3/1/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*9/10,label = 'First Case in NY',
+           color = 'firebrick3', fontface = c('bold'))+
+  geom_vline(data = NULL, xintercept = as.Date("1/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick1')+
+  annotate('text', x = as.Date("1/20/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*9/10,label = 'First case in US',
+           color = 'firebrick1', fontface = c('bold'),hjust = -.05)+
+  ylab('Count')+
+  xlab('Date')+
+  scale_y_continuous(label = scales::comma,
+                     breaks = seq(from = 0, to = 200000, by = 5000),
+                     expand = c(0,0))+
+  scale_x_date(date_breaks = '14 days',
+               date_labels = "%m/%d")+
+  transition_reveal(date)+
+  theme_bw()+
+  theme(plot.title = element_text(hjust = .5),
+        legend.title = element_blank(),
+        legend.position = 'bottom')
+
+dat.melt.DS.log <- dat.melt.DS
+dat.melt.DS.log$value<- ifelse(dat.melt.DS$value == 0, .001,dat.melt.DS$value) ## Imputes small values so they plot
+
+## DOWNSTATE LOG CASES ##
+DSonlylog <-
+  ggplot(dat.melt.DS.log, aes(x = date, y = value, color = Admin2, fill = Admin2))+
+  geom_line(size = 1.5)+
+  geom_point(size = 3)+
+  geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick4')+
+  annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*7/10,label = 'NYS on Pause',
+           color = 'firebrick4', fontface = c('bold'))+
+  geom_vline(data = NULL, xintercept = as.Date("3/1/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick3')+
+  annotate('text', x = as.Date("3/1/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*7/10,label = 'First Case in NY',
+           color = 'firebrick3', fontface = c('bold'))+
+  geom_vline(data = NULL, xintercept = as.Date("1/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick1')+
+  annotate('text', x = as.Date("1/20/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*7/10,label = 'First case in US',
+           color = 'firebrick1', fontface = c('bold'),hjust = -.05)+
+  ggtitle('Down State New York Log Cases')+
+  ylab('Log(Count)')+
+  xlab('Date')+
+  transition_reveal(date)+
+  scale_y_log10(expand = c(0,0))+
+  scale_x_date(date_breaks = '14 days',
+               date_labels = "%m/%d")+
+  theme_bw()+
+  theme(plot.title = element_text(hjust = .5),
+        legend.title = element_blank(),
+        legend.position = 'bottom')
+
+
+## Adding Rate Growth to Downstate Data
+RateGrowthDS <- dat.melt.DS %>%
+  group_by(Admin2) %>%
+  mutate(Diff_growth = value - lag(value),
+         Rate_growth = Diff_growth/lag(value)*100)
+
+
+## 3-day moving average of rate growth
+RateGrowthDS <- RateGrowthDS %>%
+  group_by(Admin2) %>%
+  mutate(Rate_growth_3day = (Rate_growth + lag(Rate_growth) + lag(Rate_growth,2))/3)
+
+LongIsland <- c('Nassau', 'Suffolk')
+
+RateGrowthDS <- filter(RateGrowthDS, value > 0 & Admin2 %in% LongIsland) ## Only Long Island 
+
+
+RateGrowthDS$rg.lim <- ifelse(RateGrowthDS$Rate_growth> 100, 100, RateGrowthDS$Rate_growth) ## Growth Limited at 100 for Plotting Purposes
+
+##STATIC CHART
+LIOnlyRGstatic <-
+  ggplot(RateGrowthDS, aes(x = date, y = rg.lim/100, fill = Admin2)) + geom_tile(aes(height = rg.lim/100, y = rg.lim/100/2, width = .9), alpha = .9, position='dodge')+
+  scale_x_date(date_breaks = '3 days',
+               date_labels = "%m/%d")+
+  scale_y_continuous(label = scales::percent,
+                     breaks = seq(from = 0, to = 10000, by = .05),
+                     limits = c(0,1),
+                     expand = c(0,0))+
+  geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick4')+
+  facet_wrap(.~Admin2, ncol = 1)+
+  annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = .1,label = 'NYS on Pause',
+           color = 'firebrick4', fontface = c('bold'))+
+  labs(title='Day-by-day Confirmed Case Growth Rate -- Long Island Only') +
+  ylab('% Increase in Confirmed Cases')+
+  xlab('Date')+
+  theme_minimal()+
+  theme(plot.title = element_text(hjust = .5),
+        legend.title = element_blank(),
+        legend.position = 'bottom')
+
 ```
 
-## Including Plots
+## Downstate New York
 
-You can also embed plots, for example:
+New York City cases have well outpaced the rest of downstate New York:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r, echo=FALSE}
+animate(DSonly, nframes = 100, renderer = gifski_renderer("Downstate.gif"))
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale. 
+
+```{r, echo=FALSE}
+
+animate(DSonlylog, nframes = 100, renderer = gifski_renderer("DownstateLog.gif"))
+
+```
+
+## Long Island 
+
+Long Island experienced early exponential growth, which was significantly slowed by the NYS on Pause orders
+
+```{r, echo = FALSE}
+
+plot(LIOnlyRGstatic)
+
+```
