@@ -1,6 +1,5 @@
 ---
 title: "Coronavirus Data Analysis for New York"
-author: "Connor J Schweitzer"
 ---
 
 
