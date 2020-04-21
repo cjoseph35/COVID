@@ -240,7 +240,6 @@ suppressWarnings(animate(DSonlylog, nframes = 100, renderer = gifski_renderer("D
 
 ## Long Island 
 
-Long Island experienced early exponential growth, which was significantly slowed by the NYS on Pause orders. 
 
 ```{r, echo = FALSE}
 
@@ -248,7 +247,7 @@ suppressWarnings(plot(LIOnlyRGstatic))
 
 ```
 
-The growth have death rates have experienced a similar decline.
+Deaths have also been increasing at a slower pace due to social distancing measures, though the effect on COVID outcomes (i.e., hospitalizations and deaths) is lagged considerably more than confirmed cases. 
 
 ```{r, echo = FALSE}
 
@@ -256,7 +255,7 @@ suppressWarnings(plot(LIonlyRGstaticdeath))
 
 ```
 
-The 3-day moving average illustrates a clear decline in growth of cases, though missing values (from delayed data reporting) were not imputed or smoothed. 
+The 3-day moving average further illustrates the decline in growth of cases. 
 
 ```{r, echo = FALSE}
 
