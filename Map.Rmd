@@ -111,7 +111,7 @@ covidny <-
                                    '<br/>% of Pop Infected: ',paste0(pct,"%")),
                    fillColor = ~qpal(pct),
                    color = ~qpal(pct), fillOpacity = .7,
-                   radius = ~5 + pctrank*15,
+                   radius = ~5 + pctrank*10,
                    label = ~Admin2)%>%
   addLegend("bottomleft", pal = qpal, values = ~pct,
             title = "% of Pop Infected")%>%
@@ -121,6 +121,6 @@ covidny <-
 ```
 
 
-```{r, echo=FALSE, out.width = '100%'}
+```{r, echo=FALSE, fig.width=12, fig.height=8}
 suppressWarnings(covidny)
 ```
