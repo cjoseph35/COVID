@@ -27,7 +27,14 @@ require(rnaturalearth, quietly = TRUE)
 require(rnaturalearthdata, quietly = TRUE)
 library(leaflet)
 library(maps)
+library(ggthemes)
 library(htmlwidgets)
+library(directlabels)
+library(extrafont)
+loadfonts(device = 'win')
+
+windowsFonts()
+
 
 setwd("C:\\Users\\CONNO\\OneDrive\\Documents\\GitHub\\COVID")
 
@@ -75,6 +82,9 @@ dat.death.melt.LI <- dat.death.melt.NY[dat.death.melt.NY$Admin2 == 'Suffolk' | d
 ##Downstate Only##
 dat.melt.DS <- dat.melt.NY[dat.melt.NY$Admin2 == 'Suffolk' | dat.melt.NY$Admin2 == 'Nassau'|dat.melt.NY$Admin2 == 'New York'|dat.melt.NY$Admin2 == 'Westchester'|dat.melt.NY$Admin2 == 'Rockland'|dat.melt.NY$Admin2 == 'Orange',]
 
+
+dat.melt.DS<- dat.melt.DS[!is.na(dat.melt.DS$date),]
+
 ## DOWNSTATE ALL CASES ##
 DSonly <-
   ggplot(dat.melt.DS, aes(x = date, y = value, color = Admin2, fill = Admin2))+
@@ -97,15 +107,29 @@ DSonly <-
   scale_x_date(date_breaks = '14 days',
                date_labels = "%m/%d")+
   transition_reveal(date)+
-  theme_bw()+
-  theme(plot.title = element_text(hjust = .5),
-        legend.title = element_blank(),
-        legend.position = 'bottom')
-
+      theme_wsj()+
+      theme(plot.title = element_text(hjust = .5,
+                                      size = 16,
+                                      family = windowsFonts("Calibri"),
+                                      face = 'bold'),
+            legend.title = element_blank(),
+            legend.position = 'None',
+            axis.text = element_text(size = 12,
+                                     family = windowsFonts("Calibri Light")),
+            plot.background = element_rect(fill = 'white'),
+            panel.background = element_rect(fill = "white"),
+            legend.background = element_rect(fill = "white"),
+            strip.background = element_rect(fill = 'white'),
+            strip.text = element_text(family = windowsFonts("Calibri Light"),
+                                      size = 14),
+            text = element_text(family = windowsFonts("Calibri Light")))
 dat.melt.DS.log <- dat.melt.DS
 dat.melt.DS.log$value<- ifelse(dat.melt.DS$value == 0, .001,dat.melt.DS$value) ## Imputes small values so they plot
+dat.melt.DS.log <- dat.melt.DS.log[!is.na(dat.melt.DS.log$date),]
+
 
 ## DOWNSTATE LOG CASES ##
+
 DSonlylog <-
   ggplot(dat.melt.DS.log, aes(x = date, y = value, color = Admin2, fill = Admin2))+
   geom_line(size = 1.5)+
@@ -126,10 +150,23 @@ DSonlylog <-
   scale_y_log10(expand = c(0,0))+
   scale_x_date(date_breaks = '14 days',
                date_labels = "%m/%d")+
-  theme_bw()+
-  theme(plot.title = element_text(hjust = .5),
-        legend.title = element_blank(),
-        legend.position = 'bottom')
+      theme_wsj()+
+      theme(plot.title = element_text(hjust = .5,
+                                      size = 16,
+                                      family = windowsFonts("Calibri"),
+                                      face = 'bold'),
+            legend.title = element_blank(),
+            legend.position = 'None',
+            axis.text = element_text(size = 12,
+                                     family = windowsFonts("Calibri Light")),
+            plot.background = element_rect(fill = 'white'),
+            panel.background = element_rect(fill = "white"),
+            legend.background = element_rect(fill = "white"),
+            strip.background = element_rect(fill = 'white'),
+            strip.text = element_text(family = windowsFonts("Calibri Light"),
+                                      size = 14),
+            text = element_text(family = windowsFonts("Calibri Light")))
+
 
 
 ## Adding Rate Growth to Downstate Data
@@ -144,17 +181,48 @@ RateGrowthDeath.LI <-
   mutate(Diff_growth = value - lag(value),
          Rate_growth = Diff_growth/lag(value)*100)
 
+RateGrowthDeath.LI <-
+  RateGrowthDeath.LI  %>%
+  group_by(Admin2) %>%
+  mutate(Rate_growth_7day = (Rate_growth + lag(Rate_growth) + lag(Rate_growth,2)+
+                               lag(Rate_growth,3)+lag(Rate_growth,4)+
+                               lag(Rate_growth,5) + lag(Rate_growth,6))/7)
+
+RateGrowthDeath.LI <- RateGrowthDeath.LI %>%
+  group_by(Admin2) %>%
+  mutate(Diff_growth_7day = (Diff_growth + lag(Diff_growth) + lag(Diff_growth,2)+
+                               lag(Diff_growth,3)+lag(Diff_growth,4)+
+                               lag(Diff_growth,5) + lag(Diff_growth,6))/7)
+
+
 RateGrowthDeath.LI <- RateGrowthDeath.LI[RateGrowthDeath.LI$value > 0,]
 
 
-## 3-day moving average of rate growth
+## 3 DAY MOVING AVERAGE ##
 RateGrowthDS <- RateGrowthDS %>%
   group_by(Admin2) %>%
   mutate(Rate_growth_3day = (Rate_growth + lag(Rate_growth) + lag(Rate_growth,2))/3)
 
 LongIsland <- c('Nassau', 'Suffolk')
 
+##7-DAY MOVING AVERAGE ##
+RateGrowthDS <- RateGrowthDS %>%
+  group_by(Admin2) %>%
+  mutate(Rate_growth_7day = (Rate_growth + lag(Rate_growth) + lag(Rate_growth,2)+
+                               lag(Rate_growth,3)+lag(Rate_growth,4)+
+                               lag(Rate_growth,5) + lag(Rate_growth,6))/7)
+
+RateGrowthDS <- RateGrowthDS %>%
+  group_by(Admin2) %>%
+  mutate(Diff_growth_7day = (Diff_growth + lag(Diff_growth) + lag(Diff_growth,2)+
+                               lag(Diff_growth,3)+lag(Diff_growth,4)+
+                               lag(Diff_growth,5) + lag(Diff_growth,6))/7)
+
+
 RateGrowthDS <- filter(RateGrowthDS, value > 0 & Admin2 %in% LongIsland) ## Only Long Island 
+
+
+
 
 
 RateGrowthDS$rg.lim <- ifelse(RateGrowthDS$Rate_growth> 100, 100, RateGrowthDS$Rate_growth) ## Growth Limited at 100 for Plotting Purposes
@@ -175,10 +243,22 @@ LIOnlyRGstatic <-
   labs(title='Day-by-day Confirmed Case Growth Rate -- Long Island Only') +
   ylab('% Increase in Confirmed Cases')+
   xlab('Date')+
-  theme_minimal()+
-  theme(plot.title = element_text(hjust = .5),
-        legend.title = element_blank(),
-        legend.position = 'bottom')
+      theme_wsj()+
+      theme(plot.title = element_text(hjust = .5,
+                                      size = 16,
+                                      family = windowsFonts("Calibri"),
+                                      face = 'bold'),
+            legend.title = element_blank(),
+            legend.position = 'None',
+            axis.text = element_text(size = 12,
+                                     family = windowsFonts("Calibri Light")),
+            plot.background = element_rect(fill = 'white'),
+            panel.background = element_rect(fill = "white"),
+            legend.background = element_rect(fill = "white"),
+            strip.background = element_rect(fill = 'white'),
+            strip.text = element_text(family = windowsFonts("Calibri Light"),
+                                      size = 14),
+            text = element_text(family = windowsFonts("Calibri Light")))
 
 
 ##Rate Growth Static -- Death##
@@ -196,70 +276,220 @@ LIonlyRGstaticdeath <-
   labs(title='Day-by-day Death Growth Rate -- Long Island Only') +
   ylab('% Increase in Deaths')+
   xlab('Date')+
-  theme_bw()+
-  theme(plot.title = element_text(hjust = .5),
-        legend.title = element_blank(),
-        legend.position = 'bottom')
+      theme_wsj()+
+      theme(plot.title = element_text(hjust = .5,
+                                      size = 16,
+                                      family = windowsFonts("Calibri"),
+                                      face = 'bold'),
+            legend.title = element_blank(),
+            legend.position = 'None',
+            axis.text = element_text(size = 12,
+                                     family = windowsFonts("Calibri Light")),
+            plot.background = element_rect(fill = 'white'),
+            panel.background = element_rect(fill = "white"),
+            legend.background = element_rect(fill = "white"),
+            strip.background = element_rect(fill = 'white'),
+            strip.text = element_text(family = windowsFonts("Calibri Light"),
+                                      size = 14),
+            text = element_text(family = windowsFonts("Calibri Light")))
 
-## 3-day moving average ##
-LIonlyRG3day <- 
-    ggplot(RateGrowthDS, aes(x = date, y = Rate_growth_3day/100, color = Admin2, fill = Admin2))+
-      geom_point(aes(x = date, y = Rate_growth/100, color = Admin2, fill = Admin2),alpha = .5)+
-      geom_line(size = 1.5)+
+##7 Day MA##
+
+LIonlyRG7day <- 
+    ggplot(RateGrowthDS, aes(x = date, y = Rate_growth_7day/100, color = Admin2, fill = Admin2))+
+      geom_point(aes(x = date, y = Rate_growth/100, color = Admin2, fill = Admin2),alpha = 1)+
+      geom_bar(stat = 'identity', alpha = .4)+
+      geom_text(aes(label = paste0(round(Rate_growth_7day,0),"%")), color = 'black', size = 3, vjust = -.5)+
+      facet_wrap(~Admin2,
+                 ncol = 1)+
       geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick4')+
       scale_x_date(date_breaks = '3 days',
                    date_labels = "%m/%d")+
       scale_y_continuous(label = scales::percent,
-                         expand = c(0,0))+
-      annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = 1.5,label = 'NYS on Pause',
+                         expand = c(0,0),
+                         limits = c(0,1))+
+      annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = .9,label = 'NYS on Pause',
                color = 'firebrick4', fontface = c('bold'))+
-      labs(title='3-Day Moving Average Confirmed Cases -- Long Island Only') +
-      ylab('% Increase in Cases - 3 day average')+
+      labs(title='7-Day Moving Average Reported Confirmed Cases -- Long Island Only') +
+      ylab('% Increase in Cases - 7 day average')+
       xlab('Date')+
-      theme_bw()+
-      theme(plot.title = element_text(hjust = .5),
+      theme_wsj()+
+      theme(plot.title = element_text(hjust = .5,
+                                      size = 16,
+                                      family = windowsFonts("Calibri"),
+                                      face = 'bold'),
             legend.title = element_blank(),
-            legend.position = 'bottom')
+            legend.position = 'None',
+            axis.text = element_text(size = 12,
+                                     family = windowsFonts("Calibri Light")),
+            plot.background = element_rect(fill = 'white'),
+            panel.background = element_rect(fill = "white"),
+            legend.background = element_rect(fill = "white"),
+            strip.background = element_rect(fill = 'white'),
+            strip.text = element_text(family = windowsFonts("Calibri Light"),
+                                      size = 14),
+            text = element_text(family = windowsFonts("Calibri Light")))
+
+
+
+### 7-day RG of Deaths ##################################################
+LIonlydeathRG7day <- 
+    ggplot(RateGrowthDeath.LI, aes(x = date, y = Rate_growth_7day/100, color = Admin2, fill = Admin2))+
+      geom_point(aes(x = date, y = Rate_growth/100, color = Admin2, fill = Admin2),alpha = 1)+
+      geom_bar(stat = 'identity', alpha = .4)+
+      geom_text(aes(label = paste0(round(Rate_growth_7day,0),"%")), color = 'black', size = 3.5, vjust = -.5)+
+      facet_wrap(~Admin2,
+                 ncol = 1)+
+      geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick4')+
+      scale_x_date(date_breaks = '3 days',
+                   date_labels = "%m/%d")+
+      scale_y_continuous(label = scales::percent,
+                         expand = c(0,0),
+                         limits = c(0,1))+
+      annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = .9,label = 'NYS on Pause',
+               color = 'firebrick4', fontface = c('bold'))+
+      labs(title='7-Day Moving Average Reported Deaths per Day -- Long Island Only') +
+      ylab('% Increase in Cases - 7 day average')+
+      xlab('Date')+
+      theme_wsj()+
+      theme(plot.title = element_text(hjust = .5,
+                                      size = 16,
+                                      family = windowsFonts("Calibri"),
+                                      face = 'bold'),
+            legend.title = element_blank(),
+            legend.position = 'None',
+            axis.text = element_text(size = 12,
+                                     family = windowsFonts("Calibri Light")),
+            plot.background = element_rect(fill = 'white'),
+            panel.background = element_rect(fill = "white"),
+            legend.background = element_rect(fill = "white"),
+            strip.background = element_rect(fill = 'white'),
+            strip.text = element_text(family = windowsFonts("Calibri Light"),
+                                      size = 14),
+            text = element_text(family = windowsFonts("Calibri Light")))
+
+########################################################################
+
+###Individual Cases and 7 day average###################################
+IC7 <- ggplot(RateGrowthDS, aes(x = date, y = Diff_growth, color = Admin2, fill=Admin2))+
+  geom_bar(stat = 'identity',alpha = .7)+
+  geom_line(aes(x = date, y = Diff_growth_7day, color = Admin2), alpha = 1, size = 2)+
+  facet_wrap(~Admin2,
+             ncol = 1)+
+  geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', 
+             color = 'firebrick4')+
+  scale_x_date(date_breaks = '3 days',
+                   date_labels = "%m/%d")+
+  scale_y_continuous(label = scales::comma,
+                         expand = c(0,0))+
+        annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = 1000,label = 'NYS on Pause',
+               color = 'firebrick4', fontface = c('bold'))+
+  ylab('New Cases')+
+  xlab('Date')+
+  labs(title = 'New Individual Cases Reported per Day')+
+      theme_wsj()+
+      theme(plot.title = element_text(hjust = .5,
+                                      size = 16,
+                                      family = windowsFonts("Calibri"),
+                                      face = 'bold'),
+            legend.title = element_blank(),
+            legend.position = 'None',
+            axis.text = element_text(size = 12,
+                                     family = windowsFonts("Calibri Light")),
+            plot.background = element_rect(fill = 'white'),
+            panel.background = element_rect(fill = "white"),
+            legend.background = element_rect(fill = "white"),
+            strip.background = element_rect(fill = 'white'),
+            strip.text = element_text(family = windowsFonts("Calibri Light"),
+                                      size = 14),
+            text = element_text(family = windowsFonts("Calibri Light")))
+
+
+
+########################################################################
+ICDeath7 <-
+  ggplot(RateGrowthDeath.LI, aes(x = date, y = Diff_growth, color = Admin2, fill=Admin2))+
+  geom_bar(stat = 'identity',alpha = .7)+
+  geom_line(aes(x = date, y = Diff_growth_7day, color = Admin2), alpha = 1, size = 2)+
+  facet_wrap(~Admin2,
+             ncol = 1)+
+  geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', 
+             color = 'firebrick4')+
+  
+  scale_x_date(date_breaks = '3 days',
+                   date_labels = "%m/%d")+
+  scale_y_continuous(label = scales::comma,
+                         expand = c(0,0))+
+        annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = 100,label = 'NYS on Pause',
+               color = 'firebrick4', fontface = c('bold'))+
+  ylab('New Cases')+
+  xlab('Date')+
+  labs(title = 'New Individual Deaths Reported per Day')+
+      theme_wsj()+
+      theme(plot.title = element_text(hjust = .5,
+                                      size = 16,
+                                      family = windowsFonts("Calibri"),
+                                      face = 'bold'),
+            legend.title = element_blank(),
+            legend.position = 'None',
+            axis.text = element_text(size = 12,
+                                     family = windowsFonts("Calibri Light")),
+            plot.background = element_rect(fill = 'white'),
+            panel.background = element_rect(fill = "white"),
+            legend.background = element_rect(fill = "white"),
+            strip.background = element_rect(fill = 'white'),
+            strip.text = element_text(family = windowsFonts("Calibri Light"),
+                                      size = 14),
+            text = element_text(family = windowsFonts("Calibri Light")))
+
 ```
 
-## Downstate New York
+# Downstate New York
 
-New York City cases have well outpaced the rest of downstate New York:
+In absolute terms, New York City cases have well outpaced the rest of downstate New York:
 
-```{r, echo=FALSE}
+```{r, echo = FALSE, fig.width=12, fig.height=8}
 suppressWarnings(animate(DSonly, nframes = 100, renderer = gifski_renderer("Downstate.gif")))
 ```
 
-The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale. 
+## The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale. 
 
-```{r, echo=FALSE}
+```{r, echo = FALSE, fig.width=12, fig.height=8}
 
 suppressWarnings(animate(DSonlylog, nframes = 100, renderer = gifski_renderer("DownstateLog.gif")))
 
 ```
 
-## Long Island 
+# Long Island 
 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.width=12, fig.height=8}
 
 suppressWarnings(plot(LIOnlyRGstatic))
 
 ```
 
-Deaths have also been increasing at a slower pace due to social distancing measures, though the effect on COVID outcomes (i.e., hospitalizations and deaths) is lagged considerably more than confirmed cases. 
+## Deaths have also been increasing at a slower pace due to social distancing measures, though the effect on COVID outcomes (i.e., hospitalizations and deaths) is lagged considerably more than confirmed cases. 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.width=12, fig.height=8}
 
 suppressWarnings(plot(LIonlyRGstaticdeath))
 
 ```
 
-The 3-day moving average further illustrates the decline in growth of cases. 
+## The 7-day moving average further illustrates the decline in growth of cases. 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.width=12, fig.height=8}
 
-suppressWarnings(plot(LIonlyRG3day))
+suppressWarnings(plot(LIonlyRG7day))
+suppressWarnings(plot(LIonlydeathRG7day))
+
 
 ```
 
+
+```{r, echo = FALSE, fig.width=12, fig.height=8}
+suppressWarnings(plot(IC7))
+suppressWarnings(plot(ICDeath7))
+
+```

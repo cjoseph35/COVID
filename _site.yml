@@ -9,6 +9,8 @@ navbar:
       href: Map.html
 output:
   html_document:
-    theme: paper
-    css: bootstrap.min.css
+    theme: null
+    highlight: null
+    css: boostrap.css
 
+  
