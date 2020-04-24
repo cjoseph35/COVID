@@ -94,7 +94,7 @@ DSonly <-
   annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*9/10,label = 'NYS on Pause',
            color = 'firebrick4', fontface = c('bold'))+
   geom_vline(data = NULL, xintercept = as.Date("3/1/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick3')+
-  annotate('text', x = as.Date("3/1/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*9/10,label = 'First Case in NY',
+  annotate('text', x = as.Date("3/1/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*8/10,label = 'First NY Positive Test',
            color = 'firebrick3', fontface = c('bold'))+
   geom_vline(data = NULL, xintercept = as.Date("1/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick1')+
   annotate('text', x = as.Date("1/20/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*9/10,label = 'First case in US',
@@ -113,7 +113,7 @@ DSonly <-
                                       family = windowsFonts("Calibri"),
                                       face = 'bold'),
             legend.title = element_blank(),
-            legend.position = 'None',
+            legend.position = 'Bottom',
             axis.text = element_text(size = 12,
                                      family = windowsFonts("Calibri Light")),
             plot.background = element_rect(fill = 'white'),
@@ -138,7 +138,7 @@ DSonlylog <-
   annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*7/10,label = 'NYS on Pause',
            color = 'firebrick4', fontface = c('bold'))+
   geom_vline(data = NULL, xintercept = as.Date("3/1/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick3')+
-  annotate('text', x = as.Date("3/1/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*7/10,label = 'First Case in NY',
+  annotate('text', x = as.Date("3/1/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*1/10,label = 'First NY Positive Test',
            color = 'firebrick3', fontface = c('bold'))+
   geom_vline(data = NULL, xintercept = as.Date("1/20/20",'%m/%d/%y'),linetype = 'dashed', color = 'firebrick1')+
   annotate('text', x = as.Date("1/20/20",'%m/%d/%y'), y = max(dat.melt.DS$value)*7/10,label = 'First case in US',
@@ -156,7 +156,7 @@ DSonlylog <-
                                       family = windowsFonts("Calibri"),
                                       face = 'bold'),
             legend.title = element_blank(),
-            legend.position = 'None',
+            legend.position = 'Bottom',
             axis.text = element_text(size = 12,
                                      family = windowsFonts("Calibri Light")),
             plot.background = element_rect(fill = 'white'),
@@ -448,13 +448,13 @@ ICDeath7 <-
 
 In absolute terms, New York City cases have well outpaced the rest of downstate New York:
 
-```{r, echo = FALSE, fig.width=12, fig.height=8}
-suppressWarnings(animate(DSonly, nframes = 100, renderer = gifski_renderer("Downstate.gif")))
+```{r, echo = FALSE, fig.width=22}
+suppressWarnings(animate(DSonly, nframes = 100))
 ```
 
-## The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale. 
+The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale. 
 
-```{r, echo = FALSE, fig.width=12, fig.height=8}
+```{r, echo = FALSE, fig.width=12}
 
 suppressWarnings(animate(DSonlylog, nframes = 100, renderer = gifski_renderer("DownstateLog.gif")))
 
@@ -469,7 +469,7 @@ suppressWarnings(plot(LIOnlyRGstatic))
 
 ```
 
-## Deaths have also been increasing at a slower pace due to social distancing measures, though the effect on COVID outcomes (i.e., hospitalizations and deaths) is lagged considerably more than confirmed cases. 
+Deaths have also been increasing at a slower pace due to social distancing measures, though the effect on COVID outcomes (i.e., hospitalizations and deaths) is lagged considerably more than confirmed cases. 
 
 ```{r, echo = FALSE, fig.width=12, fig.height=8}
 
@@ -477,7 +477,10 @@ suppressWarnings(plot(LIonlyRGstaticdeath))
 
 ```
 
-## The 7-day moving average further illustrates the decline in growth of cases. 
+The 7-day moving average further illustrates the decline in growth of cases. 
+
+
+These four charts represent the growth of cases and deaths for each county:
 
 ```{r, echo = FALSE, fig.width=12, fig.height=8}
 
@@ -487,6 +490,8 @@ suppressWarnings(plot(LIonlydeathRG7day))
 
 ```
 
+
+These four charts represent the absolute number cases and deaths per day for each county. The line represents the 7-day moving average, which smooths out data irregularities:
 
 ```{r, echo = FALSE, fig.width=12, fig.height=8}
 suppressWarnings(plot(IC7))
