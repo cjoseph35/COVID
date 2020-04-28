@@ -2,6 +2,7 @@ name: "Connor J. Schweitzer"
 output_dir: "."
 navbar:
   title: "Connor J. Schweitzer"
+  date: "Last compiled on `r format(Sys.time(), '%m/%d/%Y')`"
   left:
     - text: "Charts"
       href: index.html

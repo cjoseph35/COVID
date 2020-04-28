@@ -453,17 +453,26 @@ ICDeath7 <-
 
 In absolute terms, New York City cases have well outpaced the rest of downstate New York:
 
-```{r, echo = FALSE, fig.width=22}
-suppressWarnings(animate(DSonly, nframes = 100))
+```{r, echo = FALSE,message = FALSE, warning = FALSE, results = FALSE}
+#anim_save("DSonly.gif", DSonly)
+animate(DSonly, width = 800, height = 500)
+anim_save("DSonly.gif")
 ```
+
+
+![](DSonly.gif)
+
 
 The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale. 
 
-```{r, echo = FALSE, fig.width=12}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE, fig.width=12}
 
-suppressWarnings(animate(DSonlylog, nframes = 100, renderer = gifski_renderer("DownstateLog.gif")))
-
+#anim_save("DSonlylog.gif", DSonlylog)
+animate(DSonlylog, width = 800, height = 500)
+anim_save("DSonlylog.gif")
 ```
+
+![](DSonlylog.gif)
 
 # Long Island 
 
