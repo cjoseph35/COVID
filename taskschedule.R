@@ -1,4 +1,5 @@
 library(rmarkdown)
+library(taskscheduleR)
 
 Sys.setenv(RSTUDIO_PANDOC="C:/Program Files/RStudio/bin/pandoc")
 
