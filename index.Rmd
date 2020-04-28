@@ -1,5 +1,6 @@
 ---
 title: "Coronavirus Data Analysis for New York"
+date: "Last updated on `r format(Sys.time(), '%m/%d/%Y at %H:%M:%S')`"
 layout: default
 ---
 
