@@ -1,9 +1,9 @@
 name: "Connor J. Schweitzer"
+date: "Last updated on `r format(Sys.time(), '%m/%d/%Y')`"
 output_dir: "."
 navbar:
   title: "Connor J. Schweitzer"
-  date: "Last compiled on `r format(Sys.time(), '%m/%d/%Y')`"
-  left:
+    left:
     - text: "Charts"
       href: index.html
     - text: "Map"
