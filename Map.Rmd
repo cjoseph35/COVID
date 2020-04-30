@@ -1,6 +1,6 @@
 ---
 title: "Coronavirus by County in NYS"
-
+date: "Last updated on `r format(Sys.time(), '%m/%d/%Y at %H:%M:%S')`"
 ---
 
 ```{r, echo=FALSE}
