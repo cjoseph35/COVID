@@ -31,10 +31,10 @@ library(maps)
 library(ggthemes)
 library(htmlwidgets)
 library(directlabels)
-library(extrafont)
+library(extrafont) 
 loadfonts(device = 'win')
 
-windowsFonts()
+#windowsFonts()
 
 
 setwd("C:\\Users\\CONNO\\OneDrive\\Documents\\GitHub\\COVID")
@@ -78,6 +78,7 @@ dat.death.melt.NY <- dat.death.melt[dat.death.melt$Province_State == 'New York',
 ##Long Island Only##
 dat.melt.LI <- dat.melt.NY[dat.melt.NY$Admin2 == 'Suffolk' | dat.melt.NY$Admin2 == 'Nassau',]
 dat.melt.LI <-dat.melt.LI[dat.melt.LI$value > 1,] ##Ignores early months
+
 dat.death.melt.LI <- dat.death.melt.NY[dat.death.melt.NY$Admin2 == 'Suffolk' | dat.death.melt.NY$Admin2 == 'Nassau',]
 
 ##Downstate Only##
