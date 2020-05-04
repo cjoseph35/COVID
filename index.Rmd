@@ -57,6 +57,17 @@ dat$FIPS <- NULL
 dat$Country_Region <- NULL 
 #############################
 
+total <- as.numeric(unlist(dat[,ncol(dat)]))
+totaldeaths <- as.numeric(unlist(dat.death[,ncol(dat.death)]))
+ustotal <- sum(total)
+ustotaldeaths <- sum(totaldeaths)
+
+totalny <- as.numeric(unlist(dat[dat$Province_State == 'New York',ncol(dat)]))
+nytotal <- sum(totalny)
+totaldeathsny <- as.numeric(unlist(dat.death[dat.death$Province_State == 'New York',ncol(dat.death)]))
+nytotaldeaths <- sum(totaldeathsny)
+
+
 ##Tidies Data##
 dat.melt <- melt(dat, id.vars = c('UID','Admin2','Province_State', 'Lat','Long_','Combined_Key'))
 dat.melt$date <- dat.melt$variable
@@ -69,6 +80,10 @@ dat.death.melt$date <- dat.death.melt$variable
 dat.death.melt$variable <- NULL
 dat.death.melt$value <- as.numeric(dat.death.melt$value)
 dat.death.melt$date <- as.Date(dat.death.melt$date,"%m/%d/%y")
+
+mrdate <- max(dat.melt$date)
+dat.mostrecent <- dat.melt[dat.melt$date == mrdate,]
+
 
 
 ## NEW YORK ONLY ##
