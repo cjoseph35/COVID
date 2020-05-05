@@ -33,6 +33,7 @@ library(htmlwidgets)
 library(directlabels)
 library(extrafont) 
 loadfonts(device = 'win')
+library(DT)
 
 #windowsFonts()
 
@@ -57,15 +58,49 @@ dat$FIPS <- NULL
 dat$Country_Region <- NULL 
 #############################
 
+
+
+### DATA TABLES ###
+
+## US ##
+#TODAY#
 total <- as.numeric(unlist(dat[,ncol(dat)]))
 totaldeaths <- as.numeric(unlist(dat.death[,ncol(dat.death)]))
 ustotal <- sum(total)
 ustotaldeaths <- sum(totaldeaths)
+#YESTERDAY
+total.yest <- as.numeric(unlist(dat[,ncol(dat)-1]))
+totaldeaths.yest <- as.numeric(unlist(dat.death[,ncol(dat.death)-1]))
+ustotal.yest <- sum(total.yest)
+ustotaldeaths.yest <- sum(totaldeaths.yest)
+#DELTA
+newus <- ustotal - ustotal.yest
+newusdeaths <- ustotaldeaths - ustotaldeaths.yest
 
+## NEW YORK ##
+#TODAY
 totalny <- as.numeric(unlist(dat[dat$Province_State == 'New York',ncol(dat)]))
 nytotal <- sum(totalny)
 totaldeathsny <- as.numeric(unlist(dat.death[dat.death$Province_State == 'New York',ncol(dat.death)]))
 nytotaldeaths <- sum(totaldeathsny)
+#YESTERDAY
+totalny.yest <- as.numeric(unlist(dat[dat$Province_State == 'New York',ncol(dat)-1]))
+nytotal.yest <- sum(totalny.yest)
+totaldeathsny.yest <- as.numeric(unlist(dat.death[dat.death$Province_State == 'New York',ncol(dat.death)-1]))
+nytotaldeaths.yest <- sum(totaldeathsny.yest)
+#DELTA
+newny <- nytotal - nytotal.yest
+newnydeaths <- nytotaldeaths - nytotaldeaths.yest
+
+## Long Island ##
+dat.ny <- dat[dat$Province_State == 'New York',]
+datdeaths.ny <- dat.death[dat.death$Province_State =='New York',]
+#TODAY
+totalli <- as.numeric(unlist(dat.ny[dat.ny$Admin2 == 'Suffolk' | dat.ny$Admin2 == 'Nassau',ncol(dat.ny)]))
+litotal <- sum(totalli)
+
+totaldeathsli <- as.numeric(unlist(datdeaths.ny[datdeaths.ny$Admin2 == 'Suffolk' | datdeaths.ny$Admin2 == 'Nassau',ncol(datdeaths.ny)]))
+litotaldeaths <- sum(totaldeathsli)
 
 
 ##Tidies Data##
