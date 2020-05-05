@@ -35,9 +35,6 @@ library(extrafont)
 loadfonts(device = 'win')
 library(DT)
 
-#windowsFonts()
-
-
 setwd("C:\\Users\\CONNO\\OneDrive\\Documents\\GitHub\\COVID")
 
 dat <- read_excel('USCOVID_TimeSeries.xlsx',sheet = 'covid')
@@ -58,8 +55,9 @@ dat$FIPS <- NULL
 dat$Country_Region <- NULL 
 #############################
 
+```
 
-
+```{r, include = FALSE}
 ### DATA TABLES ###
 
 ## US ##
@@ -98,11 +96,40 @@ datdeaths.ny <- dat.death[dat.death$Province_State =='New York',]
 #TODAY
 totalli <- as.numeric(unlist(dat.ny[dat.ny$Admin2 == 'Suffolk' | dat.ny$Admin2 == 'Nassau',ncol(dat.ny)]))
 litotal <- sum(totalli)
-
 totaldeathsli <- as.numeric(unlist(datdeaths.ny[datdeaths.ny$Admin2 == 'Suffolk' | datdeaths.ny$Admin2 == 'Nassau',ncol(datdeaths.ny)]))
 litotaldeaths <- sum(totaldeathsli)
+#YESTERDAY
+totalli.yest <- as.numeric(unlist(dat.ny[dat.ny$Admin2 == 'Suffolk' | dat.ny$Admin2 == 'Nassau',ncol(dat.ny)-1]))
+litotal.yest <- sum(totalli.yest)
+totaldeathsli.yest <- as.numeric(unlist(datdeaths.ny[datdeaths.ny$Admin2 == 'Suffolk' | datdeaths.ny$Admin2 == 'Nassau',ncol(datdeaths.ny)-1]))
+litotaldeaths.yest <- sum(totaldeathsli.yest)
+#DELTA
+newli <- litotal - litotal.yest
+newlideaths <-litotaldeaths - litotaldeaths.yest
+
+##COERCING INTO DATA FRAME ###
+
+rnames <- c('United States','New York','Long Island')
+totaltoday <- rbind(ustotal, nytotal, litotal)
+totalyesterday <- rbind(ustotal.yest, nytotal.yest, litotal.yest)
+totaldelta <- rbind(newus, newny, newli)
+totaldeathstoday <- rbind(ustotaldeaths, nytotaldeaths, litotaldeaths)
+totaldeathsyesterday <- rbind(ustotaldeaths.yest, nytotaldeaths.yest, litotaldeaths.yest)
+totaldeathsdelta <- rbind(newusdeaths, newnydeaths, newlideaths)
+
+df.frontpage <- data.frame(Cases.Today = formatC(totaltoday,format="d", big.mark=","),
+                           Cases.Yesterday = formatC(totalyesterday,format="d", big.mark=","), 
+                           New.Cases = formatC(totaldelta,format="d", big.mark=","), 
+                           Deaths.Today = formatC(totaldeathstoday,format="d", big.mark=","), 
+                           Deaths.Yesterday = formatC(totaldeathsyesterday,format="d", big.mark=","),
+                           New.Deaths = formatC(totaldeathsdelta,format="d", big.mark=","))
 
 
+rownames(df.frontpage) <- rnames
+
+```
+
+```{r, include = FALSE}
 ##Tidies Data##
 dat.melt <- melt(dat, id.vars = c('UID','Admin2','Province_State', 'Lat','Long_','Combined_Key'))
 dat.melt$date <- dat.melt$variable
@@ -500,6 +527,18 @@ ICDeath7 <-
             text = element_text(family = windowsFonts("Calibri Light")))
 
 ```
+
+# Data
+```{r, echo = FALSE,message = FALSE, warning = FALSE, results = FALSE}
+datatable(df.frontpage, filter = 'none',options = list(paging = FALSE),
+          caption = paste0("Data as of ", as.Date(max(dat.melt$date),"%m/%d/%y")))
+
+
+```
+
+
+
+
 
 # Downstate New York
 
