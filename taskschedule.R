@@ -28,6 +28,13 @@ add(repo = getwd(), path = "OpenAndClose.vbs")
 add(repo = getwd(), path = "_site.yml")
 add(repo = getwd(), path = "_site.yml")
 add(repo = getwd(), path = "_config.yml")
+add(repo = getwd(), path = "LIonlyRG7day.jpg")
+add(repo = getwd(), path = "LIonlydeathRG7day.jpg")
+add(repo = getwd(), path = "IC7.jpg")
+add(repo = getwd(), path = "ICDeath7.jpg")
+
+
+
 # Commit the file
 commit(repo = getwd(), message = paste0("Update as at: ", Sys.time(), "%Y-%m-%d %H:%M:%S"))
 

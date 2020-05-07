@@ -594,19 +594,25 @@ The 7-day moving average further illustrates the decline in growth of cases.
 
 These four charts represent the growth of cases and deaths for each county:
 
-```{r, echo = FALSE, fig.width=12, fig.height=8}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE}
 
-suppressWarnings(plot(LIonlyRG7day))
-suppressWarnings(plot(LIonlydeathRG7day))
+ggsave("LIonlyRG7day.jpg", plot = LIonlyRG7day, width = 12, height = 8, units ="in")
+ggsave("LIonlydeathRG7day.jpg", plot = LIonlydeathRG7day, width = 12, height = 8, units ="in")
 
 
 ```
 
+![](LIonlyRG7day.jpg)
+![](LIonlydeathRG7day.jpg)
 
 These four charts represent the absolute number cases and deaths per day for each county. The line represents the 7-day moving average, which smooths out data irregularities:
 
-```{r, echo = FALSE, fig.width=12, fig.height=8}
-suppressWarnings(plot(IC7))
-suppressWarnings(plot(ICDeath7))
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE}
+
+ggsave("IC7.jpg", plot = IC7, width = 12, height = 8, units ="in")
+ggsave("ICDeath7.jpg", plot = ICDeath7, width = 12, height = 8, units ="in")
 
 ```
+
+![](IC7.jpg)
+![](ICDeath7.jpg)
