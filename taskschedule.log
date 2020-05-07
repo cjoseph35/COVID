@@ -3218,3 +3218,110 @@ Warning messages:
 1: package 'knitr' was built under R version 3.6.3 
 2: package 'kableExtra' was built under R version 3.6.3 
 [e02ed0e] 2020-05-07: Update as at: 2020-05-07 12:21:08%Y-%m-%d %H:%M:%S
+Warning message:
+package 'rmarkdown' was built under R version 3.6.3 
+Warning message:
+package 'taskscheduleR' was built under R version 3.6.3 
+Warning message:
+package 'git2r' was built under R version 3.6.3 
+
+Rendering: ./index.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |...                                                                   |   4%
+   inline R code fragments
+
+  |                                                                              |......                                                                |   9%
+label: unnamed-chunk-1 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+  |                                                                              |.........                                                             |  13%
+  ordinary text without R code
+
+  |                                                                              |............                                                          |  17%
+label: unnamed-chunk-2 (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |...............                                                       |  22%
+  ordinary text without R code
+
+  |                                                                              |..................                                                    |  26%
+label: unnamed-chunk-3 (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |.....................                                                 |  30%
+  ordinary text without R code
+
+  |                                                                              |........................                                              |  35%
+label: unnamed-chunk-4 (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |...........................                                           |  39%
+  ordinary text without R code
+
+  |                                                                              |..............................                                        |  43%
+label: unnamed-chunk-5 (with options) 
+List of 6
+ $ echo      : logi FALSE
+ $ results   : chr "asis"
+ $ message   : logi FALSE
+ $ warning   : logi FALSE
+ $ fig.width : num 12
+ $ fig.height: num 8
+
+  |                                                                              |.................................                                     |  48%
+  ordinary text without R code
+
+  |                                                                              |.....................................                                 |  52%
+label: unnamed-chunk-6 (with options) 
+List of 4
+ $ echo   : logi FALSE
+ $ message: logi FALSE
+ $ warning: logi FALSE
+ $ results: logi FALSE
+
+  |                                                                              |........................................                              |  57%
+  ordinary text without R code
+
+  |                                                                              |...........................................                           |  61%
+label: unnamed-chunk-7 (with options) 
+List of 5
+ $ echo     : logi FALSE
+ $ message  : logi FALSE
+ $ warning  : logi FALSE
+ $ results  : logi FALSE
+ $ fig.width: num 12
+
+  |                                                                              |..............................................                        |  65%
+  ordinary text without R code
+
+  |                                                                              |.................................................                     |  70%
+label: unnamed-chunk-8 (with options) 
+List of 3
+ $ echo      : logi FALSE
+ $ fig.width : num 12
+ $ fig.height: num 8
+
+  |                                                                              |....................................................                  |  74%
+  ordinary text without R code
+
+  |                                                                              |.......................................................               |  78%
+label: unnamed-chunk-9 (with options) 
+List of 3
+ $ echo      : logi FALSE
+ $ fig.width : num 12
+ $ fig.height: num 8
+
+  |                                                                              |..........................................................            |  83%
+  ordinary text without R code
+
+  |                                                                              |.............................................................         |  87%
+label: unnamed-chunk-10 (with options) 
+List of 4
+ $ echo   : logi FALSE
+ $ message: logi FALSE
+ $ warning: logi FALSE
+ $ results: logi FALSE
+
