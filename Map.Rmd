@@ -121,6 +121,6 @@ covidny <-
 ```
 
 
-```{r, echo=FALSE, fig.width=12, fig.height=8}
+```{r, echo=FALSE, fig.width=14, fig.height=10}
 suppressWarnings(covidny)
 ```
