@@ -2,6 +2,8 @@
 title: "Coronavirus Data Analysis for New York"
 date: "Last updated on `r format(Sys.time(), '%m/%d/%Y at %H:%M:%S')`"
 layout: default
+header-includes:
+  - \usepackage{float}
 ---
 
 
@@ -557,8 +559,10 @@ animate(DSonly, width = 800, height = 500)
 anim_save("DSonly.gif")
 ```
 
+\begin{figure}[H]
+\includegraphics{DSonly.gif}
+\end{figure}
 
-![](DSonly.gif)
 
 
 The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale. 
@@ -570,7 +574,11 @@ animate(DSonlylog, width = 800, height = 500)
 anim_save("DSonlylog.gif")
 ```
 
-![](DSonlylog.gif)
+\begin{figure}[H]
+\includegraphics{DSonlylog.gif}
+\end{figure}
+
+
 
 # Long Island 
 
@@ -585,11 +593,18 @@ ggsave("LIonlyRGstaticdeath.jpg", plot = LIonlyRGstaticdeath, width = 12, height
 
 Growth in total cases:
 
-![](LIOnlyRGstatic.jpg)
+\begin{figure}[H]
+\includegraphics{LIOnlyRGstatic.jpg}
+\end{figure}
+
+
 
 Growth in total deaths:
 
-![](LIonlyRGstaticdeath.jpg)
+\begin{figure}[H]
+\includegraphics{LIOnlyRGstaticdeath.jpg}
+\end{figure}
+
 
 
 Same idea, but the 7-day moving average (meant to smooth data-reporting inconsistencies):
@@ -602,8 +617,14 @@ ggsave("LIonlydeathRG7day.jpg", plot = LIonlydeathRG7day, width = 12, height = 8
 
 ```
 
-![](LIonlyRG7day.jpg)
-![](LIonlydeathRG7day.jpg)
+\begin{figure}[H]
+\includegraphics{LIonlyRG7day.jpg}
+\end{figure}
+
+\begin{figure}[H]
+\includegraphics{LIonlydeathRG7day.jpg}
+\end{figure}
+
 
 These four charts represent the absolute number cases and deaths per day for each county. The line represents the 7-day moving average:
 
@@ -614,5 +635,13 @@ ggsave("ICDeath7.jpg", plot = ICDeath7, width = 12, height = 8, units ="in")
 
 ```
 
-![](IC7.jpg)
-![](ICDeath7.jpg)
+
+\begin{figure}[H]
+\includegraphics{IC7.jpg}
+\end{figure}
+
+
+\begin{figure}[H]
+\includegraphics{ICDeath7.jpg}
+\end{figure}
+
