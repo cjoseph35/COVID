@@ -9,7 +9,7 @@ objApp.Visible = True
 
 'Open workbook; Run Macro; Save Workbook with changes; Close; Quit Excel
 Set wbToRun = objApp.Workbooks.Open(strPath) 
-
+wbToRun.RefreshAll
 wbToRun.Save 
 wbToRun.Close 
 objApp.Quit 
