@@ -32,6 +32,9 @@ add(repo = getwd(), path = "LIonlyRG7day.jpg")
 add(repo = getwd(), path = "LIonlydeathRG7day.jpg")
 add(repo = getwd(), path = "IC7.jpg")
 add(repo = getwd(), path = "ICDeath7.jpg")
+add(repo = getwd(), path = "LIOnlyRGstatic.jpg")
+add(repo = getwd(), path = "LIOnlyRGstaticdeath.jpg")
+
 
 
 
