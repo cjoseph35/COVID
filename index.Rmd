@@ -8,7 +8,7 @@ header-includes:
 
 
 ```{r, echo=FALSE}
-knitr::opts_chunk$set(error = TRUE)
+knitr::opts_chunk$set(fig.pos = 'H', error = TRUE)
 ```
 
 
@@ -531,7 +531,7 @@ ICDeath7 <-
 ```
 
 # Data
-```{r, echo = FALSE, results='asis',message = FALSE, warning = FALSE, fig.width=12, fig.height=8}
+```{r, echo = FALSE, results='asis',message = FALSE, warning = FALSE, fig.width=12, fig.height=8, fig.pos = 'H'}
 library(knitr)
 library('kableExtra')
 thistable <- 
@@ -553,95 +553,67 @@ show(thistable)
 
 Absolute cases by downstate NY county (NYC boroughs are combined):
 
-```{r, echo = FALSE,message = FALSE, warning = FALSE, results = FALSE}
+```{r, echo = FALSE,message = FALSE, warning = FALSE, results = FALSE, fig.pos = 'H'}
 #anim_save("DSonly.gif", DSonly)
 animate(DSonly, width = 800, height = 500)
 anim_save("DSonly.gif")
 ```
 
-\begin{figure}[H]
-\includegraphics{DSonly.gif}
-\end{figure}
-
+![](DSonly.gif)
 
 
 The NYS on Pause measure appears to have been effective at slowing the growth rate of the virus, illustrated by a bending curve when viewing the same data on a log scale. 
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE, fig.width=12}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE, fig.width=12, fig.pos = 'H'}
 
 #anim_save("DSonlylog.gif", DSonlylog)
 animate(DSonlylog, width = 800, height = 500)
 anim_save("DSonlylog.gif")
 ```
 
-\begin{figure}[H]
-\includegraphics{DSonlylog.gif}
-\end{figure}
-
-
+![](DSonlylog.gif)
 
 # Long Island 
 
+Growth in total cases and total deaths:
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE, fig.pos = 'H', fig.width = 12, fig.height = 8}
 
 ggsave("LIOnlyRGstatic.jpg", plot = LIOnlyRGstatic, width = 12, height = 8, units ="in")
 ggsave("LIonlyRGstaticdeath.jpg", plot = LIonlyRGstaticdeath, width = 12, height = 8, units ="in")
 
+plot(LIOnlyRGstatic)
+plot(LIonlyRGstaticdeath)
+
 
 ```
-
-Growth in total cases:
-
-\begin{figure}[H]
-\includegraphics{LIOnlyRGstatic.jpg}
-\end{figure}
-
-
-
-Growth in total deaths:
-
-\begin{figure}[H]
-\includegraphics{LIOnlyRGstaticdeath.jpg}
-\end{figure}
 
 
 
 Same idea, but the 7-day moving average (meant to smooth data-reporting inconsistencies):
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE, fig.pos = 'H', fig.width = 12, fig.height = 8}
 
 ggsave("LIonlyRG7day.jpg", plot = LIonlyRG7day, width = 12, height = 8, units ="in")
 ggsave("LIonlydeathRG7day.jpg", plot = LIonlydeathRG7day, width = 12, height = 8, units ="in")
 
+plot(LIonlyRG7day)
+plot(LIonlydeathRG7day)
 
 ```
-
-\begin{figure}[H]
-\includegraphics{LIonlyRG7day.jpg}
-\end{figure}
-
-\begin{figure}[H]
-\includegraphics{LIonlydeathRG7day.jpg}
-\end{figure}
 
 
 These four charts represent the absolute number cases and deaths per day for each county. The line represents the 7-day moving average:
 
-```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE}
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = FALSE, fig.pos = 'H', fig.width = 12, fig.height = 8}
 
 ggsave("IC7.jpg", plot = IC7, width = 12, height = 8, units ="in")
 ggsave("ICDeath7.jpg", plot = ICDeath7, width = 12, height = 8, units ="in")
 
+plot(IC7)
+plot(ICDeath7)
+
 ```
 
 
-\begin{figure}[H]
-\includegraphics{IC7.jpg}
-\end{figure}
-
-
-\begin{figure}[H]
-\includegraphics{ICDeath7.jpg}
-\end{figure}
 
