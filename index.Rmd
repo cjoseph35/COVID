@@ -39,8 +39,8 @@ library(DT)
 
 setwd("C:\\Users\\CONNO\\OneDrive\\Documents\\GitHub\\COVID")
 
-dat <- read_excel('USCOVID_TimeSeries.xlsx',sheet = 'covid')
-dat.death <- read_excel('USCOVID_TimeSeries.xlsx',sheet = 'covid_deaths')
+dat <- read_excel('USCOVID_TimeSeries.xlsm',sheet = 'covid')
+dat.death <- read_excel('USCOVID_TimeSeries.xlsm',sheet = 'covid_deaths')
 
 ##Removes unnecessary fields
 dat.death$iso2 <- NULL
