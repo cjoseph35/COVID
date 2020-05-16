@@ -457,9 +457,11 @@ LIonlydeathRG7day <-
 ########################################################################
 
 ###Individual Cases and 7 day average###################################
-IC7 <- ggplot(RateGrowthDS, aes(x = date, y = Diff_growth, color = Admin2, fill=Admin2))+
+IC7 <-
+  ggplot(RateGrowthDS, aes(x = date, y = Diff_growth, color = Admin2, fill=Admin2))+
   geom_bar(stat = 'identity',alpha = .7)+
   geom_line(aes(x = date, y = Diff_growth_7day, color = Admin2), alpha = 1, size = 2)+
+  geom_text(label = RateGrowthDS$Diff_growth, size = 2, color = 'black')+
   facet_wrap(~Admin2,
              ncol = 1)+
   geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', 
@@ -480,7 +482,7 @@ IC7 <- ggplot(RateGrowthDS, aes(x = date, y = Diff_growth, color = Admin2, fill=
                                       face = 'bold'),
             legend.title = element_blank(),
             legend.position = 'None',
-            axis.text = element_text(size = 12,
+            axis.text = element_text(size = 8,
                                      family = windowsFonts("Calibri Light")),
             plot.background = element_rect(fill = 'white'),
             panel.background = element_rect(fill = "white"),
@@ -497,6 +499,7 @@ ICDeath7 <-
   ggplot(RateGrowthDeath.LI, aes(x = date, y = Diff_growth, color = Admin2, fill=Admin2))+
   geom_bar(stat = 'identity',alpha = .7)+
   geom_line(aes(x = date, y = Diff_growth_7day, color = Admin2), alpha = 1, size = 2)+
+  geom_text(label = RateGrowthDeath.LI$Diff_growth, size = 2, color = 'black')+
   facet_wrap(~Admin2,
              ncol = 1)+
   geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', 
@@ -518,7 +521,7 @@ ICDeath7 <-
                                       face = 'bold'),
             legend.title = element_blank(),
             legend.position = 'None',
-            axis.text = element_text(size = 12,
+            axis.text = element_text(size = 8,
                                      family = windowsFonts("Calibri Light")),
             plot.background = element_rect(fill = 'white'),
             panel.background = element_rect(fill = "white"),
@@ -527,6 +530,7 @@ ICDeath7 <-
             strip.text = element_text(family = windowsFonts("Calibri Light"),
                                       size = 14),
             text = element_text(family = windowsFonts("Calibri Light")))
+
 
 ```
 
