@@ -466,12 +466,20 @@ IC7 <-
              ncol = 1)+
   geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', 
              color = 'firebrick4')+
+  geom_vline(data = NULL, xintercept = as.Date("5/27/20",'%m/%d/%y'),linetype = 'dashed', 
+             color = 'green')+
+  geom_vline(data = NULL, xintercept = as.Date("6/10/20",'%m/%d/%y'),linetype = 'dashed', 
+             color = 'forestgreen')+
   scale_x_date(date_breaks = '3 days',
                    date_labels = "%m/%d")+
   scale_y_continuous(label = scales::comma,
                          expand = c(0,0))+
         annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = 1000,label = 'NYS on Pause',
                color = 'firebrick4', fontface = c('bold'))+
+        annotate('text', x = as.Date("5/27/20",'%m/%d/%y'), y = 750,label = 'Phase 1 Reopen',
+               color = 'green', fontface = c('bold'))+
+        annotate('text', x = as.Date("6/10/20",'%m/%d/%y'), y = 500,label = 'Phase 2 Reopen',
+               color = 'forestgreen', fontface = c('bold'))+
   ylab('New Cases')+
   xlab('Date')+
   labs(title = 'New Individual Cases Reported per Day')+
@@ -482,7 +490,7 @@ IC7 <-
                                       face = 'bold'),
             legend.title = element_blank(),
             legend.position = 'None',
-            axis.text = element_text(size = 8,
+            axis.text = element_text(size = 6,
                                      family = windowsFonts("Calibri Light")),
             plot.background = element_rect(fill = 'white'),
             panel.background = element_rect(fill = "white"),
@@ -504,13 +512,20 @@ ICDeath7 <-
              ncol = 1)+
   geom_vline(data = NULL, xintercept = as.Date("3/20/20",'%m/%d/%y'),linetype = 'dashed', 
              color = 'firebrick4')+
-  
+  geom_vline(data = NULL, xintercept = as.Date("5/27/20",'%m/%d/%y'),linetype = 'dashed', 
+             color = 'green')+
+  geom_vline(data = NULL, xintercept = as.Date("6/10/20",'%m/%d/%y'),linetype = 'dashed', 
+             color = 'forestgreen')+
   scale_x_date(date_breaks = '3 days',
                    date_labels = "%m/%d")+
   scale_y_continuous(label = scales::comma,
                          expand = c(0,0))+
         annotate('text', x = as.Date("3/20/20",'%m/%d/%y'), y = 100,label = 'NYS on Pause',
                color = 'firebrick4', fontface = c('bold'))+
+        annotate('text', x = as.Date("5/27/20",'%m/%d/%y'), y = 100,label = 'Phase 1 Reopen',
+               color = 'green', fontface = c('bold'))+
+        annotate('text', x = as.Date("6/10/20",'%m/%d/%y'), y = 100,label = 'Phase 2 Reopen',
+               color = 'forestgreen', fontface = c('bold'))+
   ylab('New Cases')+
   xlab('Date')+
   labs(title = 'New Individual Deaths Reported per Day')+
@@ -521,7 +536,7 @@ ICDeath7 <-
                                       face = 'bold'),
             legend.title = element_blank(),
             legend.position = 'None',
-            axis.text = element_text(size = 8,
+            axis.text = element_text(size = 6,
                                      family = windowsFonts("Calibri Light")),
             plot.background = element_rect(fill = 'white'),
             panel.background = element_rect(fill = "white"),
