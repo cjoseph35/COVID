@@ -23722,3 +23722,221 @@ List of 3
 
 Output created: index.html
 There were 14 warnings (use warnings() to see them)
+[0e602a3] 2020-06-23: Update as at: 2020-06-23 12:21:27%Y-%m-%d %H:%M:%S
+Warning message:
+package 'rmarkdown' was built under R version 3.6.3 
+Warning message:
+package 'taskscheduleR' was built under R version 3.6.3 
+Warning message:
+package 'git2r' was built under R version 3.6.3 
+
+Rendering: ./Dashboard.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |........                                                              |  11%
+  ordinary text without R code
+
+  |                                                                              |................                                                      |  22%
+label: setup (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |.......................                                               |  33%
+  ordinary text without R code
+
+  |                                                                              |...............................                                       |  44%
+label: unnamed-chunk-1
+  |                                                                              |.......................................                               |  56%
+  ordinary text without R code
+
+  |                                                                              |...............................................                       |  67%
+label: unnamed-chunk-2
+  |                                                                              |......................................................                |  78%
+  ordinary text without R code
+
+  |                                                                              |..............................................................        |  89%
+label: unnamed-chunk-3
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+"C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS Dashboard.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash+smart --output Dashboard.html --email-obfuscation none --standalone --section-divs --template "C:\Users\CONNO\OneDrive\Documents\R\win-library\3.6\rmarkdown\rmd\h\default.html" --no-highlight --variable highlightjs=1 --css boostrap.css --include-before-body "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\rmarkdown-str105c3841538.html" --variable navbar=1 --variable body_padding=51 --variable header_padding=56 --variable "theme:bootstrap" --include-in-header "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\rmarkdown-str105c6ae1754c.html" --mathjax --variable "mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --lua-filter "C:/Users/CONNO/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/pagebreak.lua" --lua-filter "C:/Users/CONNO/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/latex-div.lua" 
+  |                                                                              |                                                                      |   0%  |                                                                              |........                                                              |  11%
+  ordinary text without R code
+
+  |                                                                              |................                                                      |  22%
+label: setup (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |.......................                                               |  33%
+  ordinary text without R code
+
+  |                                                                              |...............................                                       |  44%
+label: unnamed-chunk-1
+  |                                                                              |.......................................                               |  56%
+  ordinary text without R code
+
+  |                                                                              |...............................................                       |  67%
+label: unnamed-chunk-2
+  |                                                                              |......................................................                |  78%
+  ordinary text without R code
+
+  |                                                                              |..............................................................        |  89%
+label: unnamed-chunk-3
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+"C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS Dashboard.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output Dashboard.html --email-obfuscation none --standalone --section-divs --template "C:\Users\CONNO\OneDrive\Documents\R\win-library\3.6\flexdashboard\rmarkdown\templates\flex_dashboard\resources\default.html" --variable "theme:cosmo" --include-in-header "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\rmarkdown-str105c268c566.html" --mathjax --variable "mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --lua-filter "C:/Users/CONNO/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/pagebreak.lua" --lua-filter "C:/Users/CONNO/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/latex-div.lua" --include-in-header "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\file105c779815bhtml" --highlight-style pygments --include-before-body "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\file105c38c7c90.html" --include-after-body "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\file105c6c5861b.html" 
+
+Rendering: ./index.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |...                                                                   |   5%
+   inline R code fragments
+
+  |                                                                              |.......                                                               |  10%
+label: unnamed-chunk-1 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+  |                                                                              |..........                                                            |  14%
+  ordinary text without R code
+
+  |                                                                              |.............                                                         |  19%
+label: unnamed-chunk-2 (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |.................                                                     |  24%
+  ordinary text without R code
+
+  |                                                                              |....................                                                  |  29%
+label: unnamed-chunk-3 (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |.......................                                               |  33%
+  ordinary text without R code
+
+  |                                                                              |...........................                                           |  38%
+label: unnamed-chunk-4 (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |..............................                                        |  43%
+  ordinary text without R code
+
+  |                                                                              |.................................                                     |  48%
+label: unnamed-chunk-5 (with options) 
+List of 7
+ $ echo      : logi FALSE
+ $ results   : chr "asis"
+ $ message   : logi FALSE
+ $ warning   : logi FALSE
+ $ fig.width : num 12
+ $ fig.height: num 8
+ $ fig.pos   : chr "H"
+
+  |                                                                              |.....................................                                 |  52%
+  ordinary text without R code
+
+  |                                                                              |........................................                              |  57%
+label: unnamed-chunk-6 (with options) 
+List of 5
+ $ echo   : logi FALSE
+ $ message: logi FALSE
+ $ warning: logi FALSE
+ $ results: logi FALSE
+ $ fig.pos: chr "H"
+
+  |                                                                              |...........................................                           |  62%
+  ordinary text without R code
+
+  |                                                                              |...............................................                       |  67%
+label: unnamed-chunk-7 (with options) 
+List of 6
+ $ echo     : logi FALSE
+ $ message  : logi FALSE
+ $ warning  : logi FALSE
+ $ results  : logi FALSE
+ $ fig.width: num 12
+ $ fig.pos  : chr "H"
+
+  |                                                                              |..................................................                    |  71%
+  ordinary text without R code
+
+  |                                                                              |.....................................................                 |  76%
+label: unnamed-chunk-8 (with options) 
+List of 7
+ $ echo      : logi FALSE
+ $ message   : logi FALSE
+ $ warning   : logi FALSE
+ $ results   : logi FALSE
+ $ fig.pos   : chr "H"
+ $ fig.width : num 12
+ $ fig.height: num 8
+
+  |                                                                              |.........................................................             |  81%
+  ordinary text without R code
+
+  |                                                                              |............................................................          |  86%
+label: unnamed-chunk-9 (with options) 
+List of 7
+ $ echo      : logi FALSE
+ $ message   : logi FALSE
+ $ warning   : logi FALSE
+ $ results   : logi FALSE
+ $ fig.pos   : chr "H"
+ $ fig.width : num 12
+ $ fig.height: num 8
+
+  |                                                                              |...............................................................       |  90%
+  ordinary text without R code
+
+  |                                                                              |...................................................................   |  95%
+label: unnamed-chunk-10 (with options) 
+List of 7
+ $ echo      : logi FALSE
+ $ message   : logi FALSE
+ $ warning   : logi FALSE
+ $ results   : logi FALSE
+ $ fig.pos   : chr "H"
+ $ fig.width : num 12
+ $ fig.height: num 8
+
+  |                                                                              |......................................................................| 100%
+  ordinary text without R code
+
+
+"C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS index.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash+smart --output index.html --email-obfuscation none --standalone --section-divs --template "C:\Users\CONNO\OneDrive\Documents\R\win-library\3.6\rmarkdown\rmd\h\default.html" --no-highlight --variable highlightjs=1 --css boostrap.css --include-before-body "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\rmarkdown-str105c7cc07542.html" --variable navbar=1 --variable body_padding=51 --variable header_padding=56 --variable "theme:bootstrap" --include-in-header "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\rmarkdown-str105c33f744e9.html" --mathjax --variable "mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --lua-filter "C:/Users/CONNO/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/pagebreak.lua" --lua-filter "C:/Users/CONNO/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/latex-div.lua" 
+
+Rendering: ./Map.Rmd
+  |                                                                              |                                                                      |   0%  |                                                                              |............                                                          |  17%
+   inline R code fragments
+
+  |                                                                              |.......................                                               |  33%
+label: unnamed-chunk-1 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+  |                                                                              |...................................                                   |  50%
+  ordinary text without R code
+
+  |                                                                              |...............................................                       |  67%
+label: unnamed-chunk-2 (with options) 
+List of 1
+ $ include: logi FALSE
+
+  |                                                                              |..........................................................            |  83%
+  ordinary text without R code
+
+  |                                                                              |......................................................................| 100%
+label: unnamed-chunk-3 (with options) 
+List of 3
+ $ echo      : logi FALSE
+ $ fig.width : num 14
+ $ fig.height: num 10
+
+
+"C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS Map.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash+smart --output Map.html --email-obfuscation none --standalone --section-divs --template "C:\Users\CONNO\OneDrive\Documents\R\win-library\3.6\rmarkdown\rmd\h\default.html" --no-highlight --variable highlightjs=1 --css boostrap.css --include-before-body "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\rmarkdown-str105c3a7415e7.html" --variable navbar=1 --variable body_padding=51 --variable header_padding=56 --variable "theme:bootstrap" --include-in-header "C:\Users\CONNO\AppData\Local\Temp\RtmpYrtkN1\rmarkdown-str105c2d212a9d.html" --mathjax --variable "mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --lua-filter "C:/Users/CONNO/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/pagebreak.lua" --lua-filter "C:/Users/CONNO/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/latex-div.lua" 
+
+Output created: index.html
+There were 15 warnings (use warnings() to see them)
